@@ -1,0 +1,56 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node* next;
+};
+struct node* push(struct node* head, int value);
+void show(struct node* head);
+int main()
+{
+    
+    struct node* head = NULL;
+    int arg_menu = 1;
+    while(arg_menu != 0){
+        printf("Put:\n1 to add\n2 to delete\n3 to show\n0 to exit\n");
+        printf("Put mode:\n");
+        scanf("%d", &arg_menu);
+        if(arg_menu == 1){
+            int value;
+            printf("Put value:");
+            scanf("%d", &value);
+            head = push(head,value);
+        }
+        if(arg_menu == 3){
+            show(head);
+        }
+    }
+    return 0;
+}
+void show(struct node* head){
+    struct node* tp = head;
+    printf("list:\n");
+    while(tp!=NULL){
+        printf("%d ", tp->data);
+        tp = tp->next;
+    }
+}
+struct node* push(struct node* head, int value){
+    struct node* tp = head;
+    while(tp!=NULL){
+        tp = tp->next;
+    }
+    tp = (struct node*)malloc(sizeof(struct node));
+    tp->data = value;
+    tp->next = NULL;
+    return head;
+}
