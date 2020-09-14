@@ -1,20 +1,15 @@
-/******************************************************************************
-
-                            Online C Compiler.
-                Code, Compile, Run and Debug C program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
-
 #include <stdio.h>
 #include <stdlib.h>
 
 struct node {
-    int data;
+    int value;
     struct node* next;
 };
-struct node* push(struct node* head, int value);
+
 void show(struct node* head);
+void push(struct node** head, int value);
+void pop(struct node** head);
+
 int main()
 {
     
@@ -26,31 +21,49 @@ int main()
         scanf("%d", &arg_menu);
         if(arg_menu == 1){
             int value;
-            printf("Put value:");
+            printf("Put value:\n");
             scanf("%d", &value);
-            head = push(head,value);
+            push(&head,value);
+        }
+        if(arg_menu == 2){
+          pop(&head);  
         }
         if(arg_menu == 3){
             show(head);
         }
     }
+    
+    if(head != NULL){
+        free(head);
+    }
     return 0;
 }
+
 void show(struct node* head){
     struct node* tp = head;
     printf("list:\n");
     while(tp!=NULL){
-        printf("%d ", tp->data);
+        printf("%d ", tp->value);
         tp = tp->next;
+    }
+    printf("\n");
+}
+void push(struct node** head, int value){
+    struct node* tp = (struct node*)malloc(sizeof(struct node));
+    tp->next = NULL;
+    tp->value = value;
+    if(*head == NULL){
+        *head = tp;
+    }
+    else{
+        push(&((*head)->next), value);
     }
 }
-struct node* push(struct node* head, int value){
-    struct node* tp = head;
-    while(tp!=NULL){
-        tp = tp->next;
+void pop(struct node** head){
+    if(*head != NULL){
+        struct node* tp = (*head);
+        printf("Deleted: %d\n", tp->value);
+        (*head) = (*head)->next;
+        free(tp);
     }
-    tp = (struct node*)malloc(sizeof(struct node));
-    tp->data = value;
-    tp->next = NULL;
-    return head;
 }
