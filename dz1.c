@@ -10,7 +10,7 @@ void show(struct node* head);
 void push(struct node** head, int value);
 void pop(struct node** head);
 
-int main()
+int main(void)
 {
     
     struct node* head = NULL;
@@ -42,7 +42,7 @@ int main()
 void show(struct node* head){
     struct node* tp = head;
     printf("list:\n");
-    while(tp!=NULL){
+    while(tp != NULL){
         printf("%d ", tp->value);
         tp = tp->next;
     }
