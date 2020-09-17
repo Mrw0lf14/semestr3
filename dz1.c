@@ -48,6 +48,7 @@ void show(struct node* head){
     }
     printf("\n");
 }
+
 void push(struct node** head, int value){
     struct node* tp = (struct node*)malloc(sizeof(struct node));
     tp->next = NULL;
@@ -59,6 +60,7 @@ void push(struct node** head, int value){
         push(&((*head)->next), value);
     }
 }
+
 void pop(struct node** head){
     if(*head != NULL){
         struct node* tp = (*head);
