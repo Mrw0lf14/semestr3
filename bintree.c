@@ -5,6 +5,7 @@
 Write your code in this editor and press "Run" button to compile and execute it.
 
 *******************************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 struct bin{
@@ -31,6 +32,9 @@ int main()
     insert(&head, 39, 15);
     
     traverse(head);
+    delete(&head, 33);
+    traverse(head);
+    
     return 0;
 }
 
@@ -90,23 +94,36 @@ void delete(struct bin** head, int key){
         delete(&((*head)->right), key);
     else if(key == (*head)->key){
         if((*head)->right == NULL && (*head)->left == NULL){
-            free(*head);
-            *head = NULL;
+            printf("delete %d\n", (*head)->key);
+            struct bin* tp = *head;
+            free(tp);
+            tp = NULL;
         }
-        if((*head)->right == NULL || (*head)->left == NULL){
-            
+        else if((*head)->right == NULL || (*head)->left == NULL){
             if((*head)->right != NULL){
-                (*head) = (*head)->right;
-                delete(&((*head)->right), key);
+                
+                struct bin* tp = *head;
+                (*head) = tp->right;
+                free(tp);
+                tp = NULL;
             }
             else if((*head)->left != NULL){
-                (*head) = (*head)->left;
-                delete(&((*head)->left), key);
+                struct bin* tp = *head;
+                (*head) = tp->left;
+                free(tp);
+                tp = NULL;
             }
         }
         
         if((*head)->right != NULL && (*head)->left != NULL){
-            
+            if((*head)->right->left == NULL){
+                (*head) = (*head)->right;
+                delete(&((*head)->right), key);
+            }
+            else{
+                (*head) = (*head)->left;
+                delete(&((*head)->left), key);
+            }
         }
     }
 
