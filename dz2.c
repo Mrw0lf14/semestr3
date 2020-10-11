@@ -5,29 +5,32 @@ int** arr = NULL;
 
 void show(int N);
 void check(int* viseted, int cur, int find, int* bol);
-void create_dot(int N);
+void create_dot(int* arr, int N);
 
 int main(void)
 {
     int N = 0;
     
     FILE* f = NULL;
+    int* arrv = NULL;
     
     if((f = fopen("data.txt", "r")) != NULL){
 
         fscanf(f, "%d", &N);
-
+        arrv = (int*)malloc(sizeof(int)*N*N);
         arr = (int**)calloc(sizeof(int*), N);
         for(int i = 0; i < N; i++){
             arr[i] = (int*)malloc(sizeof(int));
             arr[i][0] = -1;
         }
         
+        
         int c = 0;
         for(int i = 0; i < N; i++){
             for(int j = 0; j < N; j++){
                 int tmp = 0;
                 fscanf(f, "%d", &tmp);
+                arrv[j+i*N] = tmp;
                 if(tmp == 1){
                     arr[i][c] = j;
                     c++;
@@ -41,6 +44,8 @@ int main(void)
     else
         printf("File data.txt did not open :(\n");
     
+    fclose(f);
+    
     int bol = 0;
     
     for(int i = 0; i < N; i++){
@@ -53,9 +58,11 @@ int main(void)
     }
     
         
-    create_dot(N);
+    create_dot(arrv, N);
     show(N);
+    system("dot -Tpng out.dot -oout.png");
     free(arr);
+    free(arrv);
     getchar();  
     
     return 0;
@@ -86,15 +93,16 @@ void check(int* viseted, int cur, int find, int* bol){
     }
 }
 
-void create_dot(int N){
+void create_dot(int* arr, int N){
     FILE* f = NULL;
 
     if((f = fopen("out.dot", "w")) != NULL){
-        fprintf(f, "digraph graph {\n");
-        for(int i = 0; i < N; i++){
-            fprintf(f, "%c ", ('a'+i));
-            for(int j = 0; arr[i][j] != -1; j++){
-                fprintf(f, "-- %c", ('a'+arr[i][j]));
+        fprintf(f, "graph abc {\n");
+        for(int j = 0; j < N; j++){
+            fprintf(f, "%c ", ('a'+j));
+            for(int i = j; i < N; i++){
+                if(arr[i+j*N] == 1)
+                	fprintf(f, "-- %c", ('a'+i));
             }
             fprintf(f, ";\n");
         }
