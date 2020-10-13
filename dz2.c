@@ -31,7 +31,7 @@ int main(void)
                 int tmp = 0;
                 fscanf(f, "%d", &tmp);
                 arrv[j+i*N] = tmp;
-                if(tmp == 1){
+                if(tmp >= 1){
                     arr[i][c] = j;
                     c++;
                     arr[i] = (int*)realloc(arr[i], sizeof(int)*(c+1));
@@ -53,6 +53,8 @@ int main(void)
         check(visited, 0, i, &bol);
         if(bol == 0)
             printf("graph is bad\n");
+        else
+            printf("graph is good\n");
         bol = 0; 
         free(visited);
     }
@@ -99,12 +101,10 @@ void create_dot(int* arr, int N){
     if((f = fopen("out.dot", "w")) != NULL){
         fprintf(f, "graph abc {\n");
         for(int j = 0; j < N; j++){
-            fprintf(f, "%c ", ('a'+j));
             for(int i = j; i < N; i++){
-                if(arr[i+j*N] == 1)
-                	fprintf(f, "-- %c", ('a'+i));
+                for(int k = 0; k < arr[i+j*N]; k++)
+                	fprintf(f, "%c -- %c;\n", ('a'+i), ('a'+j));
             }
-            fprintf(f, ";\n");
         }
         fprintf(f, "}");
         fclose(f);
