@@ -13,7 +13,7 @@ int main()
     int* arr = NULL;
     int size = -1;
     int max = 0;
-    int timer = 0;
+    clock_t timer;
     int show = 0;
     
     printf("Do you need to show an array?(0 or 1):\n");
@@ -37,24 +37,24 @@ int main()
             printf("original:\n");
             show_arr(arr, size);
         }
-        timer = time(NULL);
+        timer = clock();
         quick_sort(&arr, 0, size);
-        timer = time(NULL) - timer;
+        timer = clock() - timer;
         
         if(show == 1){
             printf("sorted:\n");
             show_arr(arr, size);
         }
-        printf("time quick_sort: %d\n", timer);
+        printf("time quick_sort: %.5f\n", (double)timer/CLOCKS_PER_SEC);
         
         //counting_sort
         push_arr(&arr, size, max);
         
-        timer = time(NULL);
+        timer = clock();
         quick_sort(&arr, 0, size);
-        timer = time(NULL) - timer;
+        timer = clock() - timer;
         
-        printf("time counting_sort: %d\n", timer);
+        printf("time counting_sort: %.5f\n", (double)timer/CLOCKS_PER_SEC);
     } 
     
     free(arr);
@@ -79,10 +79,10 @@ void show_arr(int* arr, int size){
 void quick_sort(int** harr, int left, int right)
 {
     int* arr = *harr;
-	
+	srand(time(NULL));
 	int i = left; 
 	int j = right;
-	int y = (right+left) / 2;
+	int y = left + rand() % (right - left);
 	int p = arr[y];
 	
 	do 
