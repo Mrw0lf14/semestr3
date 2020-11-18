@@ -2,15 +2,15 @@
 #include <stdlib.h>
 #include <time.h>
 
-void push_arr(int** arr, int size, int max);
-void show_arr(int* arr, int size);
+void push_arr(long int** arr, int size, int max);
+void show_arr(long int* arr, int size);
 
-void quick_sort(int** harr, int left, int right);
-void counting_sort(int** harr, int size, int max);
+void quick_sort(long int** harr, int left, int right);
+void counting_sort(long int** harr, int size, int max);
 
 int main()
 {
-    int* arr = NULL;
+    long int* arr = NULL;
     int size = -1;
     int max = 0;
     clock_t timer;
@@ -29,7 +29,7 @@ int main()
         if(size <= 0)
             break;
         
-        arr = (int*)malloc(size*sizeof(int));
+        arr = (long int*)malloc(size*sizeof(long int));
         
         //quick_sort
         push_arr(&arr, size, max);
@@ -61,24 +61,24 @@ int main()
     return 0;
 }
 
-void push_arr(int** arr, int size, int max){
-    int* p = *arr;
+void push_arr(long int** arr, int size, int max){
+    long int* p = *arr;
     srand(size);
     for(int i = 0; i < size; i++){
         p[i] = rand() % max;
     }
 }
 
-void show_arr(int* arr, int size){
+void show_arr(long int* arr, int size){
     for(int i = 0; i < size; i++){
         printf("%d ", arr[i]);
     }
     printf("\n");
 }
 
-void quick_sort(int** harr, int left, int right)
+void quick_sort(long int** harr, int left, int right)
 {
-    int* arr = *harr;
+    long int* arr = *harr;
 	srand(time(NULL));
 	int i = left; 
 	int j = right;
@@ -107,9 +107,9 @@ void quick_sort(int** harr, int left, int right)
 	    quick_sort(harr, i, right);
 }
 
-void counting_sort(int** harr, int size, int max){
-    int* arr = *harr;
-    int* count = (int*)calloc(max, sizeof(int));
+void counting_sort(long int** harr, int size, int max){
+    long int* arr = *harr;
+    long int* count = (long int*)calloc(max, sizeof(long int));
     
     for(int i = 0; i < size; i++){
         count[arr[i]]++;
