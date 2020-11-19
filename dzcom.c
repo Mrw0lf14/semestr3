@@ -8,7 +8,7 @@ void show_arr(long int* arr, int size);
 void quick_sort(long int** harr, int left, int right);
 void counting_sort(long int** harr, int size, int max);
 
-int main()
+int main(void)
 {
     long int* arr = NULL;
     int size = -1;
@@ -52,6 +52,7 @@ int main()
         
         timer = clock();
         quick_sort(&arr, 0, size);
+	counting_sort(&arr, size, max);
         timer = clock() - timer;
         
         printf("time counting_sort: %.5f\n", (double)timer/CLOCKS_PER_SEC);
@@ -71,7 +72,7 @@ void push_arr(long int** arr, int size, int max){
 
 void show_arr(long int* arr, int size){
     for(int i = 0; i < size; i++){
-        printf("%ld ", arr[i]);
+        printf("%d ", arr[i]);
     }
     printf("\n");
 }
